@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Host: https://lampoai.com
+Sitemap: https://lampoai.com/sitemap.xml

@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model UserApiLimit {
+  id String @id @default(cuid())
+  userId String @unique
+  count Int @default(0)
+  maxApiLimit Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  promocode UserPromocode[]
+}
+
+model UserPayment {
+  id String @id @unique
+  userId String @unique
+  price String
+  amount String
+}
+
+model UserPromocode {
+  id Int @id @default(autoincrement())
+  user UserApiLimit @relation(fields: [userId], references: [userId])
+  userId String
+  activatedPromocode String
+
+  @@index([userId])
+}
